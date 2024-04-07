@@ -11,6 +11,7 @@ provider:
     environment:
         # Symfony environment variables
         APP_ENV: prod
+    MESSENGER_TRANSPORT_DSN: ${construct:my-queue.queueUrl}
 
 plugins:
   - ./vendor/bref/bref
@@ -25,12 +26,12 @@ functions:
         events:
             - httpApi: '*'
     # This function let us run console commands in Lambda
-    console:
-        handler: bin/console
-        timeout: 120 # in seconds
-        layers:
-            - ${bref:layer.php-82} # PHP
-            - ${bref:layer.console} # The "console" layer
+#    console:
+#        handler: bin/console
+#        timeout: 120 # in seconds
+#        layers:
+#            - ${bref:layer.php-82} # PHP
+#            - ${bref:layer.console} # The "console" layer
 
 package:
     patterns:
@@ -45,3 +46,15 @@ package:
         - 'var/cache/prod/**'
         - 'public/build/entrypoints.json'
         - 'public/build/manifest.json'
+
+constructs:
+    my-queue:
+        type: queue
+        worker:
+            handler: bin/consumer.php
+            runtime: php-82
+            timeout: 60 # in seconds
+
+
+
+
