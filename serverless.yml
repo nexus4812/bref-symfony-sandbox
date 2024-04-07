@@ -13,8 +13,8 @@ provider:
         APP_ENV: prod
 
 plugins:
-    - ./vendor/bref/bref
-
+  - ./vendor/bref/bref
+  - serverless-lift
 functions:
     # This function runs the Symfony website/API
     web:
