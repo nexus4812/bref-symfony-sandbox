@@ -69,5 +69,8 @@
             "allow-contrib": false,
             "require": "7.0.*"
         }
+    },
+    "require-dev": {
+        "symplify/config-transformer": "^12.3"
     }
 }
