@@ -58,7 +58,7 @@
             "@auto-scripts"
         ],
         "deploy": [
-            "mv env/.env .env",
+            "cp env/.env .env",
             "composer install --prefer-dist --optimize-autoloader --no-dev",
             "serverless deploy"
         ]
