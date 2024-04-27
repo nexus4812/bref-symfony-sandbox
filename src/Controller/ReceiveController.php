@@ -2,20 +2,28 @@
 
 namespace App\Controller;
 
-use App\Message\SmsNotification;
+use App\Message\RequestCapture;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class ReceiveController
+final class ReceiveController extends AbstractController
 {
     #[Route('/message/receive', name: 'message.receive')]
-    public function index(Request $request, MessageBusInterface $bus): Response
+    public function index(
+        MessageBusInterface $bus,
+        Request $request,
+    ): Response
     {
-        $bus->dispatch(new SmsNotification('Look! I created a message!'));
+        $bus->dispatch(new RequestCapture(
+            $request->getBasePath(),
+            $request->server->getHeaders(),
+            $request->query->all(),
+        ));
 
-        return new JsonResponse(['message' => 'Received message']);
+        return new JsonResponse(['message' => 'Receive request']);
     }
 }
