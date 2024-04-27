@@ -57,8 +57,10 @@
         "post-update-cmd": [
             "@auto-scripts"
         ],
+        "set-env": [
+            "cp env/.env .env"
+        ],
         "deploy": [
-            "cp env/.env .env",
             "rm -fr ./var/cache",
             "composer install --prefer-dist --optimize-autoloader --no-dev",
             "serverless deploy"
