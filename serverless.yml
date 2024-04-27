@@ -10,12 +10,11 @@ provider:
     runtime: provided.al2
     environment:
         # Symfony environment variables
-        APP_ENV: prod
-    MESSENGER_TRANSPORT_DSN: ${construct:my-queue.queueUrl}
+        APP_ENV: dev
 
 plugins:
   - ./vendor/bref/bref
-  - serverless-lift
+
 functions:
     # This function runs the Symfony website/API
     web:
@@ -47,14 +46,10 @@ package:
         - 'public/build/entrypoints.json'
         - 'public/build/manifest.json'
 
-constructs:
-    my-queue:
-        type: queue
-        worker:
-            handler: bin/consumer.php
-            runtime: php-82
-            timeout: 60 # in seconds
-
-
-
-
+#constructs:
+#    jobs:
+#        type: queue
+#        worker:
+#            handler: bin/consumer.php
+#            runtime: php-82
+#            timeout: 60 # in seconds
