@@ -59,8 +59,12 @@
         ],
         "deploy": [
             "cp env/.env .env",
+            "rm -fr ./var/cache",
             "composer install --prefer-dist --optimize-autoloader --no-dev",
             "serverless deploy"
+        ],
+        "convert-yml": [
+            "php vendor/bin/config-transformer convert config"
         ]
     },
     "conflict": {
